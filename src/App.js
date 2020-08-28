@@ -43,51 +43,9 @@ export default () => {
     }
   }
 
-  const handleMouseMove = ({ clientX, clientY }) => {
-    if (isDragging) {
-      const { origin, lastTranslation } = dragInfo
-      setDragInfo({
-        ...dragInfo,
-        translation: {
-          x: Math.abs(clientX - (origin.x + lastTranslation.x)),
-          y: Math.abs(clientY - (origin.y + lastTranslation.y)),
-        },
-      })
-    }
-  }
-
-  const handleMouseUp = () => {
-    if (isDragging) {
-      const { translation } = dragInfo
-      const newPositionData = {
-        ...dragInfo,
-        isDragging: false,
-        lastTranslation: { x: translation.x, y: translation.y },
-      }
-
-      setDragInfo(newPositionData)
-      savedPosition.current = newPositionData
-    }
-  }
-
-  const picturePosition = {
-    position: "absolute",
-    right: `${dragInfo.translation.x}px`,
-    bottom: `${dragInfo.translation.y}px`,
-  }
-
   return (
     <div style={holderStyle}>
-      <div
-        style={{
-          ...picturePosition,
-          ...pictureStyle,
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      />
+      <div style={pictureStyle} onMouseDown={handleMouseDown} />
     </div>
   )
 }
